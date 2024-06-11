@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.geovis.manager.system.mapper.SystemResourcesMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.geovis.manager.system.entity.SystemResources">
+        <result column="id" property="id"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="name" property="name"/>
+        <result column="en_name" property="enName"/>
+        <result column="type" property="type"/>
+        <result column="url" property="url"/>
+        <result column="component_name" property="componentName" />
+        <result column="icon" property="icon" />
+        <result column="affix" property="affix" />
+        <result column="idx" property="idx" />
+        <result column="remark" property="remark" />
+    </resultMap>
+
+    <resultMap id="SystemResourcesDTOResultMap"
+               type="com.geovis.manager.system.dto.SystemResourcesDTO"
+               extends="BaseResultMap">
+        <collection property="roleList" javaType="java.util.HashSet" ofType="java.lang.String">
+            <constructor>
+                <arg column="role_en_name"></arg>
+            </constructor>
+        </collection>
+    </resultMap>
+
+    <select id="selectByList" resultMap="SystemResourcesDTOResultMap">
+        select
+        a.*,
+        c.en_name as role_en_name
+        from
+        system_resources a
+        left join system_role_resources b on b.resources_id = a.id
+        left join system_role c on c.id = b.role_id
+        left join system_user_role d on d.role_id = c.id
+        left join system_users e on e.id = d.user_id
+        <where>
+            ${ew.sqlSegment}
+        </where>
+        order by a.idx, a.type
+     </select>
+
+</mapper>

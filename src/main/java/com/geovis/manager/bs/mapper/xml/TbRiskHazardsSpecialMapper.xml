@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.geovis.manager.bs.mapper.TbRiskHazardsSpecialMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.geovis.manager.bs.entity.TbRiskHazardsSpecial">
+        <id column="task_name" property="taskName" />
+        <result column="id" property="id" />
+        <result column="create_by" property="createBy" />
+        <result column="create_time" property="createTime" />
+        <result column="update_by" property="updateBy" />
+        <result column="update_time" property="updateTime" />
+        <result column="task_type" property="taskType" />
+        <result column="task_status" property="taskStatus" />
+        <result column="address" property="address" />
+        <result column="report_time" property="reportTime" />
+        <result column="handle_time" property="handleTime" />
+        <result column="task_master" property="taskMaster" />
+        <result column="acceptance" property="acceptance" />
+        <result column="scene_master" property="sceneMaster" />
+        <result column="handle_desc" property="handleDesc" />
+        <result column="enterprise_id" property="enterpriseId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,
+        create_by,
+        create_time,
+        update_by,
+        update_time,
+        task_name, task_type, task_status, address, report_time, handle_time, task_master, acceptance, scene_master, handle_desc, enterprise_id
+    </sql>
+
+</mapper>

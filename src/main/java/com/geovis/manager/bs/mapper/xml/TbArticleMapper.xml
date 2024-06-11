@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.geovis.manager.bs.mapper.TbArticleMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.geovis.manager.bs.entity.TbArticle">
+        <id column="article_name" property="articleName"/>
+        <result column="id" property="id"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="article_type" property="articleType"/>
+        <result column="work_type" property="workType"/>
+        <result column="article_file_id" property="articleFileId"/>
+        <result column="image_id" property="imageId"/>
+        <result column="upload_time" property="uploadTime"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,
+        create_by,
+        create_time,
+        update_by,
+        update_time,
+        article_name, article_type, work_type, article_file_id, image_id, upload_time
+    </sql>
+    <select id="selectExamList" resultType="com.geovis.manager.bs.dto.TbArticleWorkDTO">
+        select
+        a.*,
+        (case when (select 1 from tb_article_learned b where a.id = b.article_id and b.user_id = #{currentUserId}) is not null then '1' else '0' end) as learned
+        from tb_article a where a.work_type = #{workerType}
+    </select>
+
+</mapper>

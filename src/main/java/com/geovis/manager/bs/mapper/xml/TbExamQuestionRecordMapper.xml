@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.geovis.manager.bs.mapper.TbExamQuestionRecordMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.geovis.manager.bs.entity.TbExamQuestionRecord">
+        <id column="exam_type" property="examType" />
+        <result column="id" property="id" />
+        <result column="create_by" property="createBy" />
+        <result column="create_time" property="createTime" />
+        <result column="update_by" property="updateBy" />
+        <result column="update_time" property="updateTime" />
+        <result column="bs_type" property="bsType" />
+        <result column="exam_content" property="examContent" />
+        <result column="exam_select" property="examSelect" />
+        <result column="exam_answer" property="examAnswer" />
+        <result column="work_type" property="workType" />
+        <result column="user_answer" property="userAnswer" />
+        <result column="user_id" property="userId" />
+        <result column="exam_record_id" property="examRecordId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,
+        create_by,
+        create_time,
+        update_by,
+        update_time,
+        exam_type, bs_type, exam_content, exam_select, exam_answer, work_type, user_answer, user_id, exam_record_id
+    </sql>
+
+</mapper>

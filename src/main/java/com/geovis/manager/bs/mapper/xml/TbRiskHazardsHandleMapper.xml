@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.geovis.manager.bs.mapper.TbRiskHazardsHandleMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.geovis.manager.bs.entity.TbRiskHazardsHandle">
+        <id column="level" property="level" />
+        <result column="id" property="id" />
+        <result column="create_by" property="createBy" />
+        <result column="create_time" property="createTime" />
+        <result column="update_by" property="updateBy" />
+        <result column="update_time" property="updateTime" />
+        <result column="description" property="description" />
+        <result column="report_date" property="reportDate" />
+        <result column="handle_plan_start_date" property="handlePlanStartDate" />
+        <result column="handle_plan_end_date" property="handlePlanEndDate" />
+        <result column="check_date" property="checkDate" />
+        <result column="check_dept" property="checkDept" />
+        <result column="handle_real_date" property="handleRealDate" />
+        <result column="handle_status" property="handleStatus" />
+        <result column="master_name" property="masterName" />
+        <result column="master_phone" property="masterPhone" />
+        <result column="spend_amount" property="spendAmount" />
+        <result column="handle_method" property="handleMethod" />
+        <result column="enterprise_id" property="enterpriseId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,
+        create_by,
+        create_time,
+        update_by,
+        update_time,
+        level, description, report_date, handle_plan_start_date, handle_plan_end_date, check_date, check_dept, handle_real_date, handle_status, master_name, master_phone, spend_amount, handle_method, enterprise_id
+    </sql>
+    <select id="selectRiskHazardsPage" resultType="com.geovis.manager.bs.dto.TbRiskHazardsDTO">
+        select a.*,b."name" as enterpriseName,b.industry from tb_risk_hazards_handle a
+        left join tb_enterprise b on a.enterprise_id = b.id
+        <where>
+            ${ew.sqlSegment}
+        </where>
+    </select>
+
+    <sql id="statisticSql">
+        where a.report_time is not null
+        and date_part('year',a.report_time) = #{dto.year}
+        <if test="null != dto.enterpriseId and '' != dto.enterpriseId">
+            and a.enterprise_id = #{dto.enterpriseId}
+        </if>
+    </sql>
+
+    <select id="selectYearMonthStatistic" resultType="com.geovis.manager.bs.dto.StatisticDTO">
+        select date_part('month',a.report_time) as key,date_part('month',a.report_time) as text,count(1) as count from tb_risk_hazards_handle a
+        <include refid="statisticSql" />
+        group by date_part('month',a.report_time)
+    </select>
+
+    <select id="selectIndustryStatistic" resultType="com.geovis.manager.bs.dto.StatisticDTO">
+        select b.industry as key,b.industry as text,count(1) as count from tb_risk_hazards_handle a
+        left join tb_enterprise b on a.enterprise_id = b.id
+        <include refid="statisticSql" />
+        and a."level" = '2'
+        and b.industry is not null
+        group by b.industry
+    </select>
+
+    <select id="selectLevelStatistic" resultType="com.geovis.manager.bs.dto.StatisticDTO">
+        select a."level" as key,a."level" as text,count(1) as count from tb_risk_hazards_handle a
+        <include refid="statisticSql" />
+        and a."level" is not null
+        group by a."level"
+    </select>
+
+    <select id="selectGridStatistic" resultType="com.geovis.manager.bs.dto.StatisticDTO">
+        select b.grid_id as key,c.name as text,count(1) as count from tb_risk_hazards_handle a
+        left join tb_enterprise b on a.enterprise_id = b.id
+        left join tb_park_grid c on b.grid_id = c.id
+        <include refid="statisticSql" />
+        and b.grid_id is not null
+        group by b.grid_id,c.name
+    </select>
+    <select id="selectGridTop5Statistic"
+            resultType="com.geovis.manager.bs.dto.RiskHazardsGridTop5StatisticDTO">
+        select
+            b.grid_id as key,
+            c.name as gridName,
+            (select count(distinct(d.grid_id)) from tb_enterprise d where d.grid_id = b.grid_id) as enterpriseNum,
+            count(1) as riskHazardsNum
+        from tb_risk_hazards_handle a
+        left join tb_enterprise b on a.enterprise_id = b.id
+        left join tb_park_grid c on b.grid_id = c.id
+        and b.grid_id is not null
+        and a.report_time is not null
+        and date_part('year',a.report_time) = #{year}
+        group by b.grid_id,c.name
+        order by count(1) desc limit 5
+    </select>
+
+</mapper>

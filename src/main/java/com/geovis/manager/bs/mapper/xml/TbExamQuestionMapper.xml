@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.geovis.manager.bs.mapper.TbExamQuestionMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.geovis.manager.bs.entity.TbExamQuestion">
+        <id column="exam_type" property="examType" />
+        <result column="id" property="id" />
+        <result column="create_by" property="createBy" />
+        <result column="create_time" property="createTime" />
+        <result column="update_by" property="updateBy" />
+        <result column="update_time" property="updateTime" />
+        <result column="exam_content" property="examContent" />
+        <result column="exam_select" property="examSelect" />
+        <result column="exam_answer" property="examAnswer" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,
+        create_by,
+        create_time,
+        update_by,
+        update_time,
+        exam_type, exam_content, exam_select, exam_answer
+    </sql>
+    <select id="selectDataList" resultType="com.geovis.manager.bs.dto.TbExamQuestionDTO">
+        select
+            a.*,
+            (select string_agg(b.work_type, ',') from tb_exam_question_work_type b where b.exam_question_id = a.id) as workType
+        from tb_exam_question a
+        <where>
+            ${ew.sqlSegment}
+        </where>
+    </select>
+
+</mapper>

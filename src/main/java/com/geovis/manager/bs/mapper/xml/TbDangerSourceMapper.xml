@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.geovis.manager.bs.mapper.TbDangerSourceMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.geovis.manager.bs.entity.TbDangerSource">
+        <id column="name" property="name" />
+        <result column="id" property="id" />
+        <result column="create_by" property="createBy" />
+        <result column="create_time" property="createTime" />
+        <result column="update_by" property="updateBy" />
+        <result column="update_time" property="updateTime" />
+        <result column="source" property="source" />
+        <result column="level" property="level" />
+        <result column="responsible_person" property="responsiblePerson" />
+        <result column="connect_phone" property="connectPhone" />
+        <result column="plan_name" property="planName" />
+        <result column="plan_file_id" property="planFileId" />
+        <result column="control_safe_measure" property="controlSafeMeasure" />
+        <result column="address_desc" property="addressDesc" />
+        <result column="enterprise_id" property="enterpriseId" />
+        <result column="danger_things" property="dangerThings" />
+        <result column="critical_value" property="criticalValue" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,
+        create_by,
+        create_time,
+        update_by,
+        update_time,
+        name, source, level, responsible_person, connect_phone, plan_name, plan_file_id, control_safe_measure, address_desc, enterprise_id, danger_things, critical_value
+    </sql>
+
+</mapper>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.geovis.manager.bs.mapper.TbEnterpriseMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.geovis.manager.bs.entity.TbEnterprise">
+        <id column="industry" property="industry" />
+        <result column="id" property="id" />
+        <result column="create_by" property="createBy" />
+        <result column="create_time" property="createTime" />
+        <result column="update_by" property="updateBy" />
+        <result column="update_time" property="updateTime" />
+        <result column="main_master_name" property="mainMasterName" />
+        <result column="main_master_phone" property="mainMasterPhone" />
+        <result column="safe_master_name" property="safeMasterName" />
+        <result column="safe_master_phone" property="safeMasterPhone" />
+        <result column="safe_product_authno" property="safeProductAuthno" />
+        <result column="address" property="address" />
+        <result column="social_code" property="socialCode" />
+        <result column="product_address" property="productAddress" />
+        <result column="special_person_num" property="specialPersonNum" />
+        <result column="expire_date_start" property="expireDateStart" />
+        <result column="expire_date_end" property="expireDateEnd" />
+        <result column="establishment_date" property="establishmentDate" />
+        <result column="economic_type" property="economicType" />
+        <result column="region_code" property="regionCode" />
+        <result column="worker_num" property="workerNum" />
+        <result column="employee_num" property="employeeNum" />
+        <result column="highly_toxic_num" property="highlyToxicNum" />
+        <result column="nature_of_business" property="natureOfBusiness" />
+        <result column="region_name" property="regionName" />
+        <result column="integrity_level" property="integrityLevel" />
+        <result column="supervise_type" property="superviseType" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,
+        create_by,
+        create_time,
+        update_by,
+        update_time,
+        industry, main_master_name, main_master_phone, safe_master_name, safe_master_phone, safe_product_authno, address, social_code, product_address, special_person_num, expire_date_start, expire_date_end, establishment_date, economic_type, region_code, worker_num, employee_num, highly_toxic_num, nature_of_business, region_name, integrity_level, supervise_type
+    </sql>
+
+</mapper>

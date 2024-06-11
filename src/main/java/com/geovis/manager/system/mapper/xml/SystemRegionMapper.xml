@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.geovis.manager.system.mapper.SystemRegionMapper">
+
+    <select id="selectListByParent" resultType="com.geovis.manager.system.entity.SystemRegion">
+        WITH RECURSIVE region AS (
+        select * from sys_region
+        where id in
+        <foreach collection="idList" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+        union ALL
+        SELECT sys_region.*
+        FROM sys_region,
+        region
+        WHERE sys_region.parent_id = region.id
+        )
+        SELECT id, name, parent_id as parentId,tree_level as treeLevel
+        FROM region order by sort
+    </select>
+
+</mapper>

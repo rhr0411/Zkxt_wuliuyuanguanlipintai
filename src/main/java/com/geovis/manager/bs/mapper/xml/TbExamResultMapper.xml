@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.geovis.manager.bs.mapper.TbExamResultMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.geovis.manager.bs.entity.TbExamResult">
+        <id column="user_id" property="userId" />
+        <result column="id" property="id" />
+        <result column="create_by" property="createBy" />
+        <result column="create_time" property="createTime" />
+        <result column="update_by" property="updateBy" />
+        <result column="update_time" property="updateTime" />
+        <result column="exam_date" property="examDate" />
+        <result column="exam_score" property="examScore" />
+        <result column="certificate_expire_date" property="certificateExpireDate" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,
+        create_by,
+        create_time,
+        update_by,
+        update_time,
+        user_id, exam_date, exam_score, certificate_expire_date
+    </sql>
+    <select id="selectDataList" resultType="com.geovis.manager.bs.dto.TbExamResultDTO">
+        select
+            a.*,
+            b.worker_type as workerType,
+            b.real_name as userRealName,
+            c.name as thirdUnitName
+        from tb_exam_result a
+        left join system_users b on a.user_id = b.id
+        left join tb_third_unit c on (c.id = b.related_id and b."type" = '3')
+        <where>
+            ${ew.sqlSegment}
+        </where>
+    </select>
+
+</mapper>

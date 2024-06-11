@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.geovis.manager.system.mapper.SystemDictMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.geovis.manager.system.entity.SystemDict">
+        <result column="id" property="id"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="code" property="code"/>
+        <result column="name" property="name"/>
+        <result column="type" property="type"/>
+        <result column="remark" property="remark"/>
+        <result column="data_status" property="dataStatus"/>
+    </resultMap>
+    <select id="selectByCode" resultMap="com.geovis.manager.system.mapper.SystemDictDataMapper.BaseResultMap">
+        select b.*
+        from system_dict a
+                 left join system_dict_data b on a.id = b.dict_id
+        where a.code = #{code}
+        order by b.idx asc
+    </select>
+
+</mapper>

@@ -1,0 +1,78 @@
+
+server:
+  servlet:
+    context-path: /whManager
+  port: 9081
+
+# Spring 配置相关
+spring:
+  main:
+    # 设置允许循环引用
+    allow-circular-references: true
+  mvc:
+    pathmatch:
+      # 解决spring boot 升级到2.6.x和swagger冲突bug
+      matching-strategy: ant_path_matcher
+  application:
+    name: @project.artifactId@
+  profiles:
+    active: @profile.active@
+  # 数据源配置
+  datasource:
+    testOnBorrow: true
+    validationQuery: SELECT 1
+    timeBetweenEvictionRunsMillis: 60000
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      # 连接池名称，默认HikariPool-1
+      pool-name: GeovisHikariPool
+      # 最大连接数，小于等于0会被重置为默认值10；大于零小于1会被重置为minimum-idle的值
+      maximum-pool-size: 12
+      # 连接超时时间:毫秒，小于250毫秒，否则被重置为默认值30秒
+      connection-timeout: 60000
+      # 最小空闲连接，默认值10，小于0或大于maximum-pool-size，都会重置为maximum-pool-size
+      minimum-idle: 10
+      # 只有空闲连接数大于最大连接数且空闲时间超过该值，才会被释放
+      idle-timeout: 500000
+      # 连接最大存活时间.不等于0且小于30秒，会被重置为默认值30分钟.设置应该比mysql设置的超时时间短
+      max-lifetime: 540000
+      # 连接测试查询
+      connection-test-query: SELECT 1
+  servlet:
+    # 上传文件最大值
+    multipart:
+      max-file-size: 512MB
+      max-request-size: 512MB
+  output:
+    ansi:
+      # junit日志输出颜色
+      enabled: always
+
+# mybatis plus配置
+mybatis-plus:
+  mapper-locations: classpath*:**/mapper/xml/*Mapper.xml
+  global-config:
+    banner: false
+    db-config:
+      # 在insert的时候的字段验证策略
+      insert-strategy: not_empty
+      # 在update的时候的字段验证策略
+      update-strategy: not_null
+      # where条件的字段验证策略
+      where-strategy: not_empty
+
+
+# 底层架构配置
+geovis:
+  auth:
+    ignored-url-list:
+      - /favicon.ico
+      - /doc.html
+      - /**/api-docs
+      - /swagger-ui/**
+      - /swagger-resources/**
+      - /webjars/**
+      - /doc.html
+      - /bs/test/**
+  redis:
+    key-prefix: wh-manager

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.geovis.manager.bs.mapper.TbFireEqpMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.geovis.manager.bs.entity.TbFireEqp">
+        <id column="name" property="name" />
+        <result column="id" property="id" />
+        <result column="create_by" property="createBy" />
+        <result column="create_time" property="createTime" />
+        <result column="update_by" property="updateBy" />
+        <result column="update_time" property="updateTime" />
+        <result column="specifications" property="specifications" />
+        <result column="eqp_num" property="eqpNum" />
+        <result column="eqp_type" property="eqpType" />
+        <result column="factory_date" property="factoryDate" />
+        <result column="install_date" property="installDate" />
+        <result column="supplier" property="supplier" />
+        <result column="eqp_path" property="eqpPath" />
+        <result column="eqp_validity" property="eqpValidity" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,
+        create_by,
+        create_time,
+        update_by,
+        update_time,
+        name, specifications, eqp_num, eqp_type, factory_date, install_date, supplier, eqp_path, eqp_validity
+    </sql>
+
+</mapper>

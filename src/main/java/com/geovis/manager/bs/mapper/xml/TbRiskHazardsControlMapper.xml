@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.geovis.manager.bs.mapper.TbRiskHazardsControlMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.geovis.manager.bs.entity.TbRiskHazardsControl">
+        <id column="master_name" property="masterName" />
+        <result column="id" property="id" />
+        <result column="create_by" property="createBy" />
+        <result column="create_time" property="createTime" />
+        <result column="update_by" property="updateBy" />
+        <result column="update_time" property="updateTime" />
+        <result column="master_phone" property="masterPhone" />
+        <result column="danger_status" property="dangerStatus" />
+        <result column="danger_desc" property="dangerDesc" />
+        <result column="handle_desc" property="handleDesc" />
+        <result column="daily_check_file_id" property="dailyCheckFileId" />
+        <result column="daily_check_file_name" property="dailyCheckFileName" />
+        <result column="has_waring" property="hasWaring" />
+        <result column="enterprise_id" property="enterpriseId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,
+        create_by,
+        create_time,
+        update_by,
+        update_time,
+        master_name, master_phone, danger_status, danger_desc, handle_desc, daily_check_file_id, daily_check_file_name, has_waring, enterprise_id
+    </sql>
+
+</mapper>

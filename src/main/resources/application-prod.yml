@@ -1,0 +1,31 @@
+# Spring 配置相关
+spring:
+  # 数据源配置
+  datasource:
+    url: jdbc:p6spy:postgresql://172.25.110.186:5432/geovis-csb
+    username: postgres
+    password: Hiko@20201204
+    driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+  # redis配置
+  redis:
+    host: 172.25.110.186
+    password: Hn@2022Zkxt
+# swaager增强功能
+knife4j:
+  enable: true
+
+# 底层架构配置
+geovis:
+  swagger:
+    # 开启Swagger
+    enabled: true
+    # 解析路径
+    base-package: com.geovis
+    title: 中科星图智慧科技有限公司 Swagger API
+    description: 服务总线管理系统
+    version: 'V1'
+    license: Powered By 中科星图智慧科技有限公司
+    contact:
+      email: 58695785@qq.com
+      name: 曾德实
+      url: http://www.zengds.com

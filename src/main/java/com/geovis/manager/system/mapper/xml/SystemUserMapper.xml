@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.geovis.manager.system.mapper.SystemUserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.geovis.manager.system.entity.SystemUser">
+        <result column="id" property="id"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="user_name" property="userName"/>
+        <result column="user_password" property="userPassword"/>
+        <result column="nick_name" property="nickName"/>
+        <result column="real_name" property="realName"/>
+        <result column="avatar" property="avatar"/>
+        <result column="email" property="email"/>
+        <result column="phone" property="phone"/>
+        <result column="birthday" property="birthday"/>
+        <result column="sex" property="sex"/>
+        <result column="data_status" property="dataStatus"/>
+        <result column="type" property="type"/>
+        <result column="job" property="job"/>
+        <result column="entry_date" property="entryDate"/>
+        <result column="id_num" property="idNum"/>
+        <result column="duty_status" property="dutyStatus"/>
+        <result column="related_id" property="relatedId"/>
+        <result column="worker_type" property="workerType"/>
+    </resultMap>
+
+    <!-- 登录用户映射结果 -->
+    <resultMap id="LoginUserDTOResultMap"
+               type="com.geovis.manager.system.dto.LoginUserDTO">
+        <id column="id" property="userId"></id><!--映射主键id -->
+        <result column="dept_id" property="deptId"></result>
+        <result column="user_name" property="username"></result>
+        <result column="user_password" property="password"></result>
+        <result column="data_status" property="dataStatus"></result>
+        <collection property="roleList" javaType="java.util.HashSet" ofType="java.lang.String">
+            <constructor>
+                <arg column="role_en_name"></arg>
+            </constructor>
+        </collection>
+        <collection property="permissionList" javaType="java.util.HashSet" ofType="java.lang.String">
+            <constructor>
+                <arg column="permission_en_name"></arg>
+            </constructor>
+        </collection>
+    </resultMap>
+
+    <!-- 登录用户信息映射结果 -->
+    <resultMap id="LoginUserInfoDTOResultMap"
+               type="com.geovis.manager.system.dto.LoginUserInfoDTO">
+        <id column="id" property="userId"></id><!--映射主键id -->
+        <result column="dept_name" property="deptName"/>
+        <association property="systemUser" resultMap="BaseResultMap"></association>
+        <collection property="roleList" javaType="java.util.HashSet" ofType="java.lang.String">
+            <constructor>
+                <arg column="role_en_name"></arg>
+            </constructor>
+        </collection>
+        <collection property="permissionList" javaType="java.util.HashSet" ofType="java.lang.String">
+            <constructor>
+                <arg column="permission_en_name"></arg>
+            </constructor>
+        </collection>
+    </resultMap>
+
+    <!-- 用户列表查询映射结果 -->
+    <resultMap id="SystemUserDTOResultMap"
+               type="com.geovis.manager.system.dto.SystemUserDTO"
+               extends="BaseResultMap">
+        <result column="dept_name" property="deptName"/>
+        <collection property="roleList"
+                    ofType="com.geovis.manager.system.entity.SystemRole">
+            <result column="role_id" property="id"/>
+            <result column="role_name" property="name"/>
+        </collection>
+    </resultMap>
+
+    <!-- 根据用户名查询登录用户信息 -->
+    <select id="selectByUsername" resultMap="LoginUserDTOResultMap">
+        select a.id,
+               a.user_name,
+               a.user_password,
+               a.data_status,
+               a.dept_id,
+               c.en_name as role_en_name,
+               e.en_name as permission_en_name
+        from system_users a
+                 left join system_user_role b on a.id = b.user_id
+                 left join system_role c on b.role_id = c.id
+                 left join system_role_resources d on c.id = d.role_id
+                 left join system_resources e on d.resources_id = e.id
+        where a.user_name = #{username}
+    </select>
+
+
+    <!-- 根据用户id查询登录用户信息 -->
+    <select id="selectByUserId" resultMap="LoginUserInfoDTOResultMap">
+        select a.id,
+               a.user_name,
+               a.nick_name,
+               a.real_name,
+               a.avatar,
+               a.email,
+               a.phone,
+               a.birthday,
+               a.sex,
+               a.data_status,
+               a.dept_id,
+               c.en_name as role_en_name,
+               e.en_name as permission_en_name,
+               f.dept_name,
+               a.type,
+               a.job,
+               a.entry_date,
+               a.id_num,
+               a.duty_status,
+               a.related_id,
+               a.worker_type
+        from system_users a
+                 left join system_user_role b on a.id = b.user_id
+                 left join system_role c on b.role_id = c.id
+                 left join system_role_resources d on c.id = d.role_id
+                 left join system_resources e on d.resources_id = e.id
+                 left join system_dept f on a.dept_id = f.id
+        where a.id = #{userId}
+    </select>
+
+
+    <select id="selectByPage" resultMap="SystemUserDTOResultMap">
+        select a.id,
+        a.user_name,
+        a.nick_name,
+        a.real_name,
+        a.email,
+        a.phone,
+        a.birthday,
+        a.sex,
+        a.data_status,
+        a.dept_id,
+        c.id as role_id,
+        c.name as role_name,
+        d.dept_name,
+        a.type,
+        a.job,
+        a.entry_date,
+        a.id_num,
+        a.duty_status,
+        a.related_id,
+        a.worker_type
+        from system_users a
+        left join system_user_role b on a.id = b.user_id
+        left join system_role c on c.id = b.role_id
+        left join system_dept d on a.dept_id = d.id
+        <where>
+            ${ew.sqlSegment}
+        </where>
+    </select>
+
+</mapper>

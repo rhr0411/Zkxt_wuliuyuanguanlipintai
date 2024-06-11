@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.geovis.manager.bs.mapper.TbAccidentMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.geovis.manager.bs.entity.TbAccident">
+        <id column="type" property="type" />
+        <result column="id" property="id" />
+        <result column="create_by" property="createBy" />
+        <result column="create_time" property="createTime" />
+        <result column="update_by" property="updateBy" />
+        <result column="update_time" property="updateTime" />
+        <result column="happen_time" property="happenTime" />
+        <result column="address" property="address" />
+        <result column="loss_amount" property="lossAmount" />
+        <result column="Injury_num" property="injuryNum" />
+        <result column="dead_num" property="deadNum" />
+        <result column="description" property="description" />
+        <result column="rescue_desc" property="rescueDesc" />
+        <result column="enterprise_id" property="enterpriseId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,
+        create_by,
+        create_time,
+        update_by,
+        update_time,
+        type, happen_time, address, loss_amount, Injury_num, dead_num, description, rescue_desc, enterprise_id
+    </sql>
+
+</mapper>

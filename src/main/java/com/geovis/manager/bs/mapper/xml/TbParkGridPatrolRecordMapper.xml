@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.geovis.manager.bs.mapper.TbParkGridPatrolRecordMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.geovis.manager.bs.entity.TbParkGridPatrolRecord">
+        <id column="patrol_tmp_id" property="patrolTmpId" />
+        <result column="id" property="id" />
+        <result column="create_by" property="createBy" />
+        <result column="create_time" property="createTime" />
+        <result column="update_by" property="updateBy" />
+        <result column="update_time" property="updateTime" />
+        <result column="team_name" property="teamName" />
+        <result column="team_leader" property="teamLeader" />
+        <result column="grid_id" property="gridId" />
+        <result column="team_leader_phone" property="teamLeaderPhone" />
+        <result column="patrol_task" property="patrolTask" />
+        <result column="patrol_plan_route" property="patrolPlanRoute" />
+        <result column="patrol_plan_start_time" property="patrolPlanStartTime" />
+        <result column="patrol_plan_end_time" property="patrolPlanEndTime" />
+        <result column="patrol_actual_start_time" property="patrolActualStartTime" />
+        <result column="patrol_actual_end_time" property="patrolActualEndTime" />
+        <result column="patrol_status" property="patrolStatus" />
+        <result column="grid_name" property="gridName" />
+        <result column="patrol_actual_route" property="patrolActualRoute" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,
+        create_by,
+        create_time,
+        update_by,
+        update_time,
+        patrol_tmp_id, team_name, team_leader, grid_id, team_leader_phone, patrol_task, patrol_plan_route, patrol_plan_start_time, patrol_plan_end_time, patrol_actual_start_time, patrol_actual_end_time, patrol_status, grid_name, patrol_actual_route
+    </sql>
+    <select id="selectGridStatistic" resultType="com.geovis.manager.bs.dto.StatisticDTO">
+        select grid_id as key,grid_name as text,count(1) as count from tb_park_grid_patrol_record
+        where patrol_status = '1' and date_part('year',patrol_actual_end_time) = #{year} group by grid_id,grid_name
+    </select>
+
+</mapper>

@@ -1,0 +1,8 @@
+服务器：
+192.168.131.19 root/geovis123
+数据库：
+192.168.131.19 postgres/postgres
+前端部署地址：
+/home/geovis-csb/web
+后端部署地址：
+/home/geovis-csb/java
