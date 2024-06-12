@@ -1,5 +1,6 @@
 package com.geovis.manager.bs.mapper;
 
+import com.geovis.manager.bs.dto.TbExamStatisticDTO;
 import com.geovis.manager.bs.entity.TbExamRecord;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
@@ -12,5 +13,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @since 2024-04-26
  */
 public interface TbExamRecordMapper extends BaseMapper<TbExamRecord> {
+
+    public TbExamStatisticDTO statistic();
 
 }

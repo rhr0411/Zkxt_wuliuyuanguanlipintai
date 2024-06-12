@@ -9,9 +9,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.geovis.common.auth.util.AuthUtil;
 import com.geovis.common.core.constant.CommonConstants;
-import com.geovis.manager.bs.dto.TbExamEndAnswerDTO;
-import com.geovis.manager.bs.dto.TbExamEndResultDTO;
-import com.geovis.manager.bs.dto.TbExamUserAnswerDTO;
+import com.geovis.manager.bs.dto.*;
 import com.geovis.manager.bs.entity.TbExamQuestionRecord;
 import com.geovis.manager.bs.entity.TbExamRecord;
 import com.geovis.manager.bs.entity.TbExamResult;
@@ -22,6 +20,7 @@ import com.geovis.manager.bs.service.ITbExamRecordService;
 import com.geovis.manager.bs.service.ITbExamResultService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -49,6 +48,10 @@ public class TbExamRecordServiceImpl extends ServiceImpl<TbExamRecordMapper, TbE
     private final ExamProperties examProperties;
 
     private final ITbExamResultService examResultService;
+
+
+    @Autowired
+    private TbExamRecordMapper tbExamRecordMapper;
 
     @Override
     public List<TbExamQuestionRecord> beginExam(String currentUserId) {
@@ -116,5 +119,12 @@ public class TbExamRecordServiceImpl extends ServiceImpl<TbExamRecordMapper, TbE
                     .setCertificateExpireDate(result.getCertificateExpireDate());
         }
         return resultDTO;
+    }
+
+    @Override
+    public TbExamStatisticDTO statistic() {
+
+
+        return tbExamRecordMapper.statistic();
     }
 }

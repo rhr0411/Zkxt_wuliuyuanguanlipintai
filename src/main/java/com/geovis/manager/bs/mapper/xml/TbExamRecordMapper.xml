@@ -26,5 +26,13 @@
         update_time,
         user_id, work_type, user_real_name, exam_date, exam_score, status
     </sql>
+    <select id="statistic" resultType="com.geovis.manager.bs.dto.TbExamStatisticDTO">
+        select AVG(exam_score) AS examScore,
+               ROUND((select count(distinct user_id)::numeric from tb_exam_record where status='1')/(select count(distinct user_id)::numeric from tb_exam_record ),2)*100 AS status,
+               ROUND((select count(distinct user_id)::numeric from tb_exam_record where result='1')/(select count(distinct user_id)::numeric from tb_exam_record ),2)*100 AS result,
+               (select count(distinct id) from tb_exam_result) AS certificates,
+               (select count(distinct id) from tb_exam_result where certificate_expire_date <![CDATA[ < ]]> CURRENT_DATE) AS expireCertificates
+        from tb_exam_record
+    </select>
 
 </mapper>

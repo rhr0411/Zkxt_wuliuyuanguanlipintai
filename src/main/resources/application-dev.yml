@@ -8,8 +8,10 @@ spring:
     driver-class-name: com.p6spy.engine.spy.P6SpyDriver
   # redis配置
   redis:
-    host: 127.0.0.1
-    password: 123456
+    host: 220.203.3.157
+    password: geovis@123
+    database: 8
+    port: 16379
 # swaager增强功能
 knife4j:
   enable: true

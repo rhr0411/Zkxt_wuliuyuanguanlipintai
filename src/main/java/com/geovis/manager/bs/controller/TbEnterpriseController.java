@@ -117,6 +117,8 @@ public class TbEnterpriseController extends BaseController<ITbEnterpriseService>
         TbEnterprise enterprise = baseService.getById(dto.getId());
         if (!StrUtil.equals(enterprise.getIntegrityLevel(), dto.getIntegrityLevel())) {
             // TODO 发送短信通知
+            String mainMasterPhone = enterprise.getMainMasterPhone();
+
         }
         enterprise.setIntegrityLevel(dto.getIntegrityLevel())
                 .setIntegrityLevelRemark(dto.getIntegrityLevelRemark());

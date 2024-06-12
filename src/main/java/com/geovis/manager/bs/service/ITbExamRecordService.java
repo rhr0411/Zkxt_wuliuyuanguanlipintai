@@ -3,6 +3,7 @@ package com.geovis.manager.bs.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.geovis.manager.bs.dto.TbExamEndAnswerDTO;
 import com.geovis.manager.bs.dto.TbExamEndResultDTO;
+import com.geovis.manager.bs.dto.TbExamStatisticDTO;
 import com.geovis.manager.bs.entity.TbExamQuestionRecord;
 import com.geovis.manager.bs.entity.TbExamRecord;
 
@@ -33,4 +34,6 @@ public interface ITbExamRecordService extends IService<TbExamRecord> {
      * @return
      */
     TbExamEndResultDTO endExam(TbExamEndAnswerDTO dto);
+
+    TbExamStatisticDTO statistic();
 }
