@@ -41,6 +41,7 @@
         <where>
             ${ew.sqlSegment}
         </where>
+        order by a.create_time desc
     </select>
 
     <select id="getParkPage" resultType="com.geovis.manager.bs.dto.TbThirdUnitParkDTO">
@@ -52,6 +53,7 @@
         <where>
             ${ew.sqlSegment}
         </where>
+        order by a.create_time desc
     </select>
 
 </mapper>

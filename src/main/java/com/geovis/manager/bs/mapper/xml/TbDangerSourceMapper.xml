@@ -32,5 +32,73 @@
         update_time,
         name, source, level, responsible_person, connect_phone, plan_name, plan_file_id, control_safe_measure, address_desc, enterprise_id, danger_things, critical_value
     </sql>
+    <select id="statisticByLevel" resultType="com.geovis.manager.bs.dto.TbDangerSourceStatisticDTO">
+        select
+        (select count(id)
+        from tb_danger_source
+        where level='0') as level0,
+        (select count(id)
+        from tb_danger_source
+        where level='1') as level1,
+        (select count(id)
+        from tb_danger_source
+        where level='2') as level2,
+        (select count(id)
+        from tb_danger_source
+        where level='3') as level3,
+        (select count(id)
+        from tb_danger_source
+        where level='4') as level4,
+        (select count(id)
+         from tb_danger_source) as total,
+        round((select
+                   (select count(id)
+                    from tb_danger_source
+                    where level='0')::numeric/(select count(id)
+                                               from tb_danger_source)::numeric)*100,2)as level0Percent,
+        round((select
+                   (select count(id)
+                    from tb_danger_source
+                    where level='1')::numeric/(select count(id)
+                                               from tb_danger_source)::numeric)*100,2)as level1Percent,
+        round((select
+                   (select count(id)
+                    from tb_danger_source
+                    where level='2')::numeric/(select count(id)
+                                               from tb_danger_source)::numeric)*100,2)as level2Percent,
+        round((select
+                   (select count(id)
+                    from tb_danger_source
+                    where level='3')::numeric/(select count(id)
+                                               from tb_danger_source)::numeric)*100,2)as level3Percent,
+        round((select
+                   (select count(id)
+                    from tb_danger_source
+                    where level='4')::numeric/(select count(id)
+                                               from tb_danger_source)::numeric)*100,2)as level4Percent
+
+    </select>
+    <select id="statisticBySource" resultType="com.geovis.manager.bs.dto.TbDangerSourceStatisticBySourceDTO">
+        select
+            (select count(id)
+             from tb_danger_source
+             where source='1') as source1,
+            (select count(id)
+             from tb_danger_source
+             where source='2') as source2,
+            (select count(id)
+             from tb_danger_source
+             where source='3') as source3,
+            (select count(id)
+             from tb_danger_source
+             where source='4') as source4,
+            (select count(id)
+             from tb_danger_source
+             where source='5') as source5,
+            (select count(id)
+             from tb_danger_source
+             where source='6') as source6
+
+    </select>
 
 </mapper>

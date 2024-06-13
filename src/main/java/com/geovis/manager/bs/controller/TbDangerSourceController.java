@@ -10,6 +10,8 @@ import com.geovis.common.core.api.Result;
 import com.geovis.common.mybatis.page.PageParam;
 import com.geovis.common.mybatis.page.PageResult;
 import com.geovis.manager.bs.dto.TbDangerSourceSaveOrUpdateDTO;
+import com.geovis.manager.bs.dto.TbDangerSourceStatisticBySourceDTO;
+import com.geovis.manager.bs.dto.TbDangerSourceStatisticDTO;
 import com.geovis.manager.bs.entity.TbDangerSource;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import io.swagger.annotations.ApiOperation;
@@ -68,6 +70,31 @@ public class TbDangerSourceController extends BaseController<ITbDangerSourceServ
     public Result<?> deleteById(@PathVariable("id") String id) {
         baseService.removeById(id);
         return Result.ok();
+    }
+
+
+    @ApiOperation("查看危险源详情")
+    @ApiOperationSupport(order = 4)
+    @PostMapping("/getById/{id}")
+    public Result<TbDangerSource> getById(@PathVariable("id") String id) {
+        TbDangerSource byId = baseService.getById(id);
+        return Result.ok(byId);
+    }
+
+
+    @ApiOperation("查看危险源级别可视化")
+    @ApiOperationSupport(order = 5)
+    @PostMapping("statisticByLevel")
+    public Result<TbDangerSourceStatisticDTO> statisticByLevel() {
+        return Result.ok(baseService.statisticByLevel());
+    }
+
+
+    @ApiOperation("查看危险源种类可视化")
+    @ApiOperationSupport(order = 6)
+    @PostMapping("statisticBySource")
+    public Result<TbDangerSourceStatisticBySourceDTO> statisticBySource() {
+        return Result.ok(baseService.statisticBySource());
     }
 
     

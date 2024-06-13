@@ -233,6 +233,7 @@ public class TbRiskHazardsHandleServiceImpl extends ServiceImpl<TbRiskHazardsHan
                     .setCheckFileList(map.get(RiskHazardsConstant.FILE_FLAG_RISK_HAZARDS_CHECK_FILE))
                     .setCheckImageList(map.get(RiskHazardsConstant.FILE_FLAG_RISK_HAZARDS_CHECK_IMAGE))
             ;
+            return dto;
         }
         return null;
     }

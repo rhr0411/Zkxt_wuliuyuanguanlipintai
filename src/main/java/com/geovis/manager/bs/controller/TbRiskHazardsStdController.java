@@ -10,6 +10,7 @@ import com.geovis.common.core.api.Result;
 import com.geovis.common.core.controller.BaseController;
 import com.geovis.common.mybatis.page.PageParam;
 import com.geovis.common.mybatis.page.PageResult;
+import com.geovis.manager.bs.dto.TbRiskHazardsStdTree;
 import com.geovis.manager.bs.entity.TbRiskHazardsStd;
 import com.geovis.manager.bs.entity.TbRiskHazardsStdDetail;
 import com.geovis.manager.bs.service.ITbRiskHazardsStdDetailService;
@@ -21,6 +22,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * <p>
@@ -73,6 +76,14 @@ public class TbRiskHazardsStdController extends BaseController<ITbRiskHazardsStd
         // 删除内容
         riskHazardsStdDetailService.remove(Wrappers.lambdaUpdate(TbRiskHazardsStdDetail.class).eq(TbRiskHazardsStdDetail::getStdId, id));
         return Result.ok();
+    }
+
+
+    @ApiOperation("树形查询")
+    @ApiOperationSupport(order = 4)
+    @PostMapping("/getTree")
+    public Result<List<TbRiskHazardsStdTree>> getTree() {
+       return Result.ok(baseService.getTree()) ;
     }
 
 }

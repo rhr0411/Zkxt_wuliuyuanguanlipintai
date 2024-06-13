@@ -1,7 +1,10 @@
 package com.geovis.manager.bs.service;
 
+import com.geovis.manager.bs.dto.TbRiskHazardsStdTree;
 import com.geovis.manager.bs.entity.TbRiskHazardsStd;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ITbRiskHazardsStdService extends IService<TbRiskHazardsStd> {
 
+    List<TbRiskHazardsStdTree> getTree();
 }

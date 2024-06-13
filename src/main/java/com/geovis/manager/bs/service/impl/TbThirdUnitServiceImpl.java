@@ -58,7 +58,7 @@ public class TbThirdUnitServiceImpl extends ServiceImpl<TbThirdUnitMapper, TbThi
         IPage<TbThirdUnitEnterpriseDTO> page = pageParam.buildPage();
         QueryWrapper<Object> wrapper = Wrappers.query();
         TbThirdUnitEnterpriseDTO dto = pageParam.getQuery();
-        wrapper.orderByDesc("a.create_time");
+//        wrapper.orderByDesc("a.create_time");
         if (ObjectUtil.isNotEmpty(dto)) {
             wrapper.eq(StrUtil.isNotEmpty(dto.getStatus()), "a.status", dto.getStatus())
                     .eq(StrUtil.isNotEmpty(dto.getTrainStatus()), "b.train_status", dto.getTrainStatus())
@@ -73,7 +73,7 @@ public class TbThirdUnitServiceImpl extends ServiceImpl<TbThirdUnitMapper, TbThi
         IPage<TbThirdUnitParkDTO> page = pageParam.buildPage();
         QueryWrapper<Object> wrapper = Wrappers.query();
         TbThirdUnitParkQueryDTO dto = pageParam.getQuery();
-        wrapper.orderByDesc("a.create_time");
+//        wrapper.orderByDesc("a.create_time");
         if (ObjectUtil.isNotEmpty(dto)) {
             wrapper.eq(StrUtil.isNotEmpty(dto.getStatus()), "a.status", dto.getStatus())
                     .eq(StrUtil.isNotEmpty(dto.getQualificationLevel()), "a.qualification_level", dto.getQualificationLevel())

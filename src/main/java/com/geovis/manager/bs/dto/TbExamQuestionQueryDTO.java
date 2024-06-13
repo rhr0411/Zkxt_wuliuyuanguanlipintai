@@ -23,6 +23,6 @@ public class TbExamQuestionQueryDTO implements Serializable {
     private String examType;
 
     @ApiModelProperty("工种类型")
-    private String workType;
+    private String workerType;
 
 }

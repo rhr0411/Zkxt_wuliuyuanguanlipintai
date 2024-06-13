@@ -1,5 +1,7 @@
 package com.geovis.manager.bs.service;
 
+import com.geovis.manager.bs.dto.TbDangerSourceStatisticBySourceDTO;
+import com.geovis.manager.bs.dto.TbDangerSourceStatisticDTO;
 import com.geovis.manager.bs.entity.TbDangerSource;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -13,4 +15,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ITbDangerSourceService extends IService<TbDangerSource> {
 
+    TbDangerSourceStatisticDTO statisticByLevel();
+
+    TbDangerSourceStatisticBySourceDTO statisticBySource();
 }

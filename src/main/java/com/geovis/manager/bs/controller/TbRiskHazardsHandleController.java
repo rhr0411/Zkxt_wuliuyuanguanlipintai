@@ -125,4 +125,12 @@ public class TbRiskHazardsHandleController extends BaseController<ITbRiskHazards
         return Result.ok(baseService.gridTop5Statistic(year));
     }
 
+
+    @ApiOperation("列表查询")
+    @ApiOperationSupport(order = 13)
+    @PostMapping("/getList")
+    public Result<List<TbRiskHazardsHandle>> getList() {
+        return Result.ok(baseService.list());
+    }
+
 }

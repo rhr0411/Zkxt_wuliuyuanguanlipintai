@@ -27,7 +27,7 @@
     <select id="selectDataList" resultType="com.geovis.manager.bs.dto.TbExamQuestionDTO">
         select
             a.*,
-            (select string_agg(b.work_type, ',') from tb_exam_question_work_type b where b.exam_question_id = a.id) as workType
+            (select string_agg(b.worker_type, ',') from tb_exam_question_work_type b where b.exam_question_id = a.id) as workerType
         from tb_exam_question a
         <where>
             ${ew.sqlSegment}

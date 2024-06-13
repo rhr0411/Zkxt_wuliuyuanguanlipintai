@@ -3,11 +3,18 @@ package com.geovis.manager;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.http.HttpUtil;
+import com.geovis.common.auth.constant.EncoderTypeEnum;
+import com.geovis.common.auth.props.AuthProperties;
+import com.geovis.common.auth.util.AuthUtil;
 import org.junit.Test;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-public class CommonTest {
+import javax.servlet.http.HttpServletRequest;
 
+public class CommonTest {
     @Test
     public void scheduleExec() {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();

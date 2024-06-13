@@ -59,7 +59,7 @@ public class TbExamQuestionServiceImpl extends ServiceImpl<TbExamQuestionMapper,
         queryWrapper.eq("1",1).orderByDesc("a.update_time");
         if (ObjectUtil.isNotEmpty(queryDTO)) {
             queryWrapper.eq(ObjectUtil.isNotEmpty(queryDTO.getExamType()), "a.exam_type", queryDTO.getExamType())
-                    .exists(ObjectUtil.isNotEmpty(queryDTO.getWorkType()), "select 1 from tb_exam_question_work_type c where c.exam_question_id = a.id and c.work_type = '" + queryDTO.getWorkType() + "'");
+                    .exists(ObjectUtil.isNotEmpty(queryDTO.getWorkerType()), "select 1 from tb_exam_question_work_type c where c.exam_question_id = a.id and c.worker_type = '" + queryDTO.getWorkerType() + "'");
         }
         return queryWrapper;
     }

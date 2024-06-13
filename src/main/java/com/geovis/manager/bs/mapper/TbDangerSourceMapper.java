@@ -1,5 +1,7 @@
 package com.geovis.manager.bs.mapper;
 
+import com.geovis.manager.bs.dto.TbDangerSourceStatisticBySourceDTO;
+import com.geovis.manager.bs.dto.TbDangerSourceStatisticDTO;
 import com.geovis.manager.bs.entity.TbDangerSource;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
@@ -13,4 +15,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface TbDangerSourceMapper extends BaseMapper<TbDangerSource> {
 
+
+   TbDangerSourceStatisticDTO statisticByLevel();
+
+   TbDangerSourceStatisticBySourceDTO statisticBySource();
 }
