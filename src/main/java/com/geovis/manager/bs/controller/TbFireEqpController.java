@@ -68,5 +68,13 @@ public class TbFireEqpController extends BaseController<ITbFireEqpService> {
         baseService.removeById(id);
         return Result.ok();
     }
+
+
+    @ApiOperation("消防设施总数量")
+    @ApiOperationSupport(order = 4)
+    @PostMapping("/count")
+    public Result<?> count() {
+        return Result.ok(baseService.count());
+    }
     
 }

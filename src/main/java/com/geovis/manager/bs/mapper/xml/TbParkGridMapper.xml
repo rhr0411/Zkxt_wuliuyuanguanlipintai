@@ -22,5 +22,17 @@
         update_time,
         name, coordinate_points
     </sql>
+    <select id="statistic" resultType="com.geovis.manager.bs.dto.TbParkGridDangerNumDto">
+        select a.name as name,sum(danger_chemicals_num) as num
+        from tb_park_grid a left join tb_enterprise b on a.id=b.grid_id
+        GROUP BY a.id
+    </select>
+    <select id="statisticHazard" resultType="com.geovis.manager.bs.dto.TbParkGridDangerNumDto">
+        select a.name as name,count(c.id) as num
+        from tb_park_grid a left join tb_enterprise b on a.id=b.grid_id left join tb_risk_hazards_handle c on b.id=c.enterprise_id
+        where c.supervision_status='2'
+        GROUP BY a.id
+
+    </select>
 
 </mapper>

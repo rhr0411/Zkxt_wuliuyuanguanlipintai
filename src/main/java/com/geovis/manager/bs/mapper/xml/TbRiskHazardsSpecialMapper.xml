@@ -31,5 +31,14 @@
         update_time,
         task_name, task_type, task_status, address, report_time, handle_time, task_master, acceptance, scene_master, handle_desc, enterprise_id
     </sql>
+    <select id="statisticTop5" resultType="com.geovis.manager.bs.dto.TbRiskHazardsSpecialStatisticDTO">
+        SELECT name,count(b.id) as num
+        FROM tb_enterprise as a left join tb_risk_hazards_special as b on a.id = b.enterprise_id
+        GROUP BY a.id
+        ORDER BY num DESC
+        LIMIT 5
+
+    </select>
+
 
 </mapper>

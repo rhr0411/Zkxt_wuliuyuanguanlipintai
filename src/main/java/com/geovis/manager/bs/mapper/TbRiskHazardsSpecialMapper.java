@@ -1,7 +1,10 @@
 package com.geovis.manager.bs.mapper;
 
+import com.geovis.manager.bs.dto.TbRiskHazardsSpecialStatisticDTO;
 import com.geovis.manager.bs.entity.TbRiskHazardsSpecial;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface TbRiskHazardsSpecialMapper extends BaseMapper<TbRiskHazardsSpecial> {
 
+    List<TbRiskHazardsSpecialStatisticDTO> statisticTop5();
 }

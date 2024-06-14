@@ -87,4 +87,21 @@ public class TbRiskHazardsControlController extends BaseController<ITbRiskHazard
         return Result.ok();
     }
 
+
+    @ApiOperation("根据ID查看详情")
+    @ApiOperationSupport(order = 5)
+    @PostMapping("/getById/{id}")
+    public Result<TbRiskHazardsControl> getById(@PathVariable("id") String id) {
+
+        return Result.ok(baseService.getById(id));
+    }
+
+
+
+    @ApiOperation("风险管控总数量")
+    @ApiOperationSupport(order = 6)
+    @PostMapping("/count")
+    public Result<?> count() {
+        return Result.ok(baseService.count());
+    }
 }

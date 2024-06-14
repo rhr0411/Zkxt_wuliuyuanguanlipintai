@@ -72,4 +72,21 @@ public class TbEqpController extends BaseController<ITbEqpService> {
         return Result.ok();
     }
 
+
+    @ApiOperation("根据ID查询详情")
+    @ApiOperationSupport(order = 4)
+    @PostMapping("/getById/{id}")
+    public Result<?> getById(@PathVariable("id") String id) {
+
+        return Result.ok(baseService.getById(id));
+    }
+
+
+    @ApiOperation("设备总数量")
+    @ApiOperationSupport(order = 5)
+    @PostMapping("/count")
+    public Result<?> count() {
+        return Result.ok(baseService.count());
+    }
+
 }

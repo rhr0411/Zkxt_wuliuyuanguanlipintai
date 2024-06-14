@@ -39,6 +39,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -229,9 +230,14 @@ public class TbParkGridPatrolRecordServiceImpl extends ServiceImpl<TbParkGridPat
     @Override
     public TbParkGridPatrolRecordStsDTO numStatistic(Integer year) {
         TbParkGridPatrolRecordStsDTO dto = new TbParkGridPatrolRecordStsDTO();
-        dto.setTotalNum((int) count())
-                .setCompleteNum((int) count(Wrappers.lambdaQuery(TbParkGridPatrolRecord.class).eq(TbParkGridPatrolRecord::getPatrolStatus, CommonConstants.YES)))
-                .setCompleteRate(NumberUtil.div(dto.getCompleteNum(), dto.getCompleteNum(), 2));
+        dto.setTotalNum((int) count()).setCompleteNum((int) count(Wrappers.lambdaQuery(TbParkGridPatrolRecord.class).eq(TbParkGridPatrolRecord::getPatrolStatus, CommonConstants.YES)));
+        if(dto.getTotalNum()==0)
+        {
+            dto.setCompleteRate(new BigDecimal("0.00"));
+        }else {
+            dto.setCompleteRate(NumberUtil.div(dto.getCompleteNum(), dto.getTotalNum(), 2));
+        }
+
         return dto;
     }
 

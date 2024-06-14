@@ -2,6 +2,7 @@ package com.geovis.manager.bs.controller;
 
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -12,9 +13,8 @@ import com.geovis.common.core.controller.BaseController;
 import com.geovis.common.mybatis.page.PageParam;
 import com.geovis.common.mybatis.page.PageResult;
 import com.geovis.manager.bs.constant.RiskHazardsSpecialConstant;
-import com.geovis.manager.bs.dto.TbRiskHazardsSpecialChangeStatusDTO;
-import com.geovis.manager.bs.dto.TbRiskHazardsSpecialQueryDTO;
-import com.geovis.manager.bs.dto.TbRiskHazardsSpecialSaveOrUpdateDTO;
+import com.geovis.manager.bs.dto.*;
+import com.geovis.manager.bs.entity.TbEnterprise;
 import com.geovis.manager.bs.entity.TbRiskHazardsSpecial;
 import com.geovis.manager.bs.service.ITbRiskHazardsSpecialService;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
@@ -24,6 +24,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>
@@ -87,5 +91,54 @@ public class TbRiskHazardsSpecialController extends BaseController<ITbRiskHazard
         baseService.removeById(id);
         return Result.ok();
     }
+
+
+    @ApiOperation("根据ID查看详情")
+    @ApiOperationSupport(order = 5)
+    @PostMapping("/getById/{id}")
+    public Result<TbRiskHazardsSpecial> getById(@PathVariable("id") String id) {
+
+        return Result.ok(baseService.getById(id));
+    }
+
+
+    @ApiOperation("列表")
+    @ApiOperationSupport(order = 6)
+    @PostMapping("/list")
+    public Result<List<TbRiskHazardsSpecial>> list() {
+
+        return Result.ok(baseService.list());
+    }
+
+
+    @ApiOperation("按类别统计")
+    @ApiOperationSupport(order = 6)
+    @PostMapping("/statistic")
+    public Result<List<TbRiskHazardsSpecialStatisticDTO>> statistic() {
+
+        List<TbRiskHazardsSpecialStatisticDTO> list = new ArrayList<>();
+        for(int i=0;i<8;i++){
+            TbRiskHazardsSpecialStatisticDTO tbRiskHazardsSpecialStatisticDTO = new TbRiskHazardsSpecialStatisticDTO();
+            LambdaQueryWrapper lambdaQueryWrapper = new LambdaQueryWrapper<TbRiskHazardsSpecial>().eq(TbRiskHazardsSpecial::getTaskType,String.valueOf(i+1));
+            long counti = baseService.count(lambdaQueryWrapper);
+            tbRiskHazardsSpecialStatisticDTO.setTaskType(String.valueOf(i+1));
+            tbRiskHazardsSpecialStatisticDTO.setNum(String.valueOf(counti));
+            list.add(tbRiskHazardsSpecialStatisticDTO);
+        }
+
+        return Result.ok(list);
+    }
+
+
+    @ApiOperation("按企业统计前5")
+    @ApiOperationSupport(order = 6)
+    @PostMapping("/statisticTop5")
+    public Result<List<TbRiskHazardsSpecialStatisticDTO>> statisticTop5() {
+
+
+        return Result.ok(baseService.statisticTop5());
+    }
+
+
 
 }

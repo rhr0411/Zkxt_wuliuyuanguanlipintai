@@ -5,6 +5,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.IterUtil;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -78,7 +79,7 @@ public class TbCheckPlanController extends BaseController<ITbCheckPlanService> {
         baseService.page(page, wrapper);
         List<TbCheckPlanDTO> dtoList = CollUtil.list(false);
         Set<String> planIdSet = page.getRecords().stream().map(TbCheckPlan::getId).collect(Collectors.toSet());
-        Map<String, List<String>> planListMap = IterUtil.toListMap(checkPlanRelatedService.list(Wrappers.lambdaQuery(TbCheckPlanRelated.class).in(TbCheckPlanRelated::getCheckPlanId, planIdSet)), TbCheckPlanRelated::getCheckPlanId, TbCheckPlanRelated::getEnterpriseId);
+        Map<String, List<String>> planListMap = IterUtil.toListMap(checkPlanRelatedService.list(Wrappers.lambdaQuery(TbCheckPlanRelated.class).in(!planIdSet.isEmpty(),TbCheckPlanRelated::getCheckPlanId, planIdSet)), TbCheckPlanRelated::getCheckPlanId, TbCheckPlanRelated::getEnterpriseId);
         Map<String, TbEnterprise> enterpriseMap = IterUtil.toMap(enterpriseService.list(), TbEnterprise::getId);
         Map<String, List<TbEnterprise>> map = MapUtil.newHashMap();
         planListMap.forEach((planId, enterpriseIdList) -> {

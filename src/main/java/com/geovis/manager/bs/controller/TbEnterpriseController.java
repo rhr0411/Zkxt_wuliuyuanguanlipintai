@@ -3,6 +3,7 @@ package com.geovis.manager.bs.controller;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -13,9 +14,13 @@ import com.geovis.common.core.constant.CommonConstants;
 import com.geovis.common.core.controller.BaseController;
 import com.geovis.common.mybatis.page.PageParam;
 import com.geovis.common.mybatis.page.PageResult;
+import com.geovis.manager.bs.constant.MessageTypeConstant;
 import com.geovis.manager.bs.dto.*;
 import com.geovis.manager.bs.entity.TbEnterprise;
+import com.geovis.manager.bs.entity.TbMessage;
+import com.geovis.manager.bs.entity.TbRiskHazardsHandle;
 import com.geovis.manager.bs.service.ITbEnterpriseService;
+import com.geovis.manager.bs.service.ITbMessageService;
 import com.geovis.manager.system.dto.SystemFileQueryDTO;
 import com.geovis.manager.system.entity.SystemFileBusiness;
 import com.geovis.manager.system.service.ISystemFileBusinessService;
@@ -28,6 +33,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -49,6 +58,9 @@ public class TbEnterpriseController extends BaseController<ITbEnterpriseService>
     private final ISystemFileBusinessService systemFileBusinessService;
 
     private final ISystemFileService systemFileService;
+
+    @Resource
+    private ITbMessageService tbMessageService;
 
     @ApiOperation("分页查询")
     @ApiOperationSupport(order = 1)
@@ -117,8 +129,12 @@ public class TbEnterpriseController extends BaseController<ITbEnterpriseService>
         TbEnterprise enterprise = baseService.getById(dto.getId());
         if (!StrUtil.equals(enterprise.getIntegrityLevel(), dto.getIntegrityLevel())) {
             // TODO 发送短信通知
-            String mainMasterPhone = enterprise.getMainMasterPhone();
-
+                TbMessage message = new TbMessage();
+                message.setContent(MessageTypeConstant.RISK_HAZARDS.getMsgTemplate())
+                        .setType(MessageTypeConstant.RISK_HAZARDS.getCode())
+                        .setEnterpriseId(enterprise.getId())
+                        .setDataTime(LocalDateTime.now());
+                tbMessageService.save(message);
         }
         enterprise.setIntegrityLevel(dto.getIntegrityLevel())
                 .setIntegrityLevelRemark(dto.getIntegrityLevelRemark());
@@ -178,6 +194,31 @@ public class TbEnterpriseController extends BaseController<ITbEnterpriseService>
                     .eq(ObjectUtil.isNotEmpty(queryDTO.getInBlacklist()), TbEnterprise::getInBlacklist, queryDTO.getInBlacklist());
         }
         return wrapper;
+    }
+
+
+    @ApiOperation("可视化端-企业类别数量统计")
+    @ApiOperationSupport(order = 10)
+    @PostMapping("/statisticCountByType")
+    public Result<List<TbEnterpriseQueryTypeDTO>> statisticCountByType() {
+        List<TbEnterpriseQueryTypeDTO> list = new ArrayList<>();
+        long count = baseService.count();
+        for(int i=0;i<3;i++){
+            TbEnterpriseQueryTypeDTO tbEnterpriseQueryTypeDTO = new TbEnterpriseQueryTypeDTO();
+            LambdaQueryWrapper lambdaQueryWrapper = new LambdaQueryWrapper<TbEnterprise>().eq(TbEnterprise::getSuperviseType,String.valueOf(i+1));
+            long counti = baseService.count(lambdaQueryWrapper);
+            tbEnterpriseQueryTypeDTO.setSuperviseType(String.valueOf(i+1));
+            tbEnterpriseQueryTypeDTO.setNum(String.valueOf(counti));
+            if(count!=0) {
+                tbEnterpriseQueryTypeDTO.setRate(BigDecimal.valueOf(NumberUtil.div(counti, count, 2)));
+            }else {
+                tbEnterpriseQueryTypeDTO.setRate(new BigDecimal(0));
+            }
+            list.add(tbEnterpriseQueryTypeDTO);
+        }
+
+
+        return Result.ok(list);
     }
 
 }

@@ -77,8 +77,8 @@ public class TbExamResultServiceImpl extends ServiceImpl<TbExamResultMapper, TbE
             // 证书状态转换
             item.setCertificateStatus(formatCertificateStatus(item.getCertificateExpireDate()));
         });
-        Map<String, List<TbArticleLearned>> learnedListMap = IterUtil.toListMap(articleLearnedService.list(Wrappers.lambdaQuery(TbArticleLearned.class).in(TbArticleLearned::getUserId, userIdList)), TbArticleLearned::getUserId);
-        Map<String, List<TbArticle>> articleListMap = IterUtil.toListMap(articleService.list(Wrappers.lambdaQuery(TbArticle.class).in(TbArticle::getWorkType, workerTypeList)), TbArticle::getWorkType);
+        Map<String, List<TbArticleLearned>> learnedListMap = IterUtil.toListMap(articleLearnedService.list(Wrappers.lambdaQuery(TbArticleLearned.class).in(CollUtil.isNotEmpty(userIdList),TbArticleLearned::getUserId, userIdList)), TbArticleLearned::getUserId);
+        Map<String, List<TbArticle>> articleListMap = IterUtil.toListMap(articleService.list(Wrappers.lambdaQuery(TbArticle.class).in(CollUtil.isNotEmpty(workerTypeList),TbArticle::getWorkType, workerTypeList)), TbArticle::getWorkType);
         page.getRecords().forEach(item -> {
             List<TbArticle> tbArticles = articleListMap.get(item.getWorkerType());
             List<TbArticleLearned> tbArticleLearnedList = learnedListMap.get(item.getUserId());

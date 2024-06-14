@@ -1,6 +1,7 @@
 package com.geovis.manager.bs.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.geovis.common.core.api.Result;
 import com.geovis.common.core.controller.BaseController;
 import com.geovis.common.mybatis.page.PageParam;
@@ -131,6 +132,14 @@ public class TbRiskHazardsHandleController extends BaseController<ITbRiskHazards
     @PostMapping("/getList")
     public Result<List<TbRiskHazardsHandle>> getList() {
         return Result.ok(baseService.list());
+    }
+
+    @ApiOperation("待整改总数量")
+    @ApiOperationSupport(order = 14)
+    @PostMapping("/getUnsupervisionCount")
+    public Result<?> getUnsupervisionCount() {
+        LambdaQueryWrapper lambdaQueryWrapper = new LambdaQueryWrapper<TbRiskHazardsHandle>().eq(TbRiskHazardsHandle::getSupervisionStatus,"2");
+        return Result.ok(baseService.count(lambdaQueryWrapper));
     }
 
 }

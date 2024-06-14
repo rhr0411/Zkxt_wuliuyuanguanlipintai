@@ -1,7 +1,10 @@
 package com.geovis.manager.bs.service;
 
+import com.geovis.manager.bs.dto.TbRiskHazardsSpecialStatisticDTO;
 import com.geovis.manager.bs.entity.TbRiskHazardsSpecial;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ITbRiskHazardsSpecialService extends IService<TbRiskHazardsSpecial> {
 
+    List<TbRiskHazardsSpecialStatisticDTO> statisticTop5();
 }

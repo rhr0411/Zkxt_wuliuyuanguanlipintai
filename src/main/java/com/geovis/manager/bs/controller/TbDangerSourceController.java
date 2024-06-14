@@ -97,5 +97,13 @@ public class TbDangerSourceController extends BaseController<ITbDangerSourceServ
         return Result.ok(baseService.statisticBySource());
     }
 
+
+    @ApiOperation("重大危险源总数量")
+    @ApiOperationSupport(order = 7)
+    @PostMapping("/count")
+    public Result<?> count() {
+        return Result.ok(baseService.count());
+    }
+
     
 }

@@ -69,5 +69,11 @@ public class TbDangerCraftController extends BaseController<ITbDangerCraftServic
         baseService.removeById(id);
         return Result.ok();
     }
-    
+
+    @ApiOperation("危险化学工艺总数量")
+    @ApiOperationSupport(order = 4)
+    @PostMapping("/count")
+    public Result<?> count() {
+        return Result.ok(baseService.count());
+    }
 }

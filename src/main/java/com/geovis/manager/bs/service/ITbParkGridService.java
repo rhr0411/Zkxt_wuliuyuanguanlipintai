@@ -1,7 +1,10 @@
 package com.geovis.manager.bs.service;
 
+import com.geovis.manager.bs.dto.TbParkGridDangerNumDto;
 import com.geovis.manager.bs.entity.TbParkGrid;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 
 /**
  * <p>
@@ -12,5 +15,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2024-04-19
  */
 public interface ITbParkGridService extends IService<TbParkGrid> {
+    List<TbParkGridDangerNumDto> statistic();
 
+    List<TbParkGridDangerNumDto> statisticHazard();
 }

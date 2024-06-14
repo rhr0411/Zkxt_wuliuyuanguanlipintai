@@ -11,9 +11,11 @@ import com.geovis.common.core.api.Result;
 import com.geovis.common.core.controller.BaseController;
 import com.geovis.common.mybatis.page.PageParam;
 import com.geovis.common.mybatis.page.PageResult;
+import com.geovis.manager.bs.dto.TbParkGridDangerNumDto;
 import com.geovis.manager.bs.dto.TbParkGridSaveOrUpdateDTO;
 import com.geovis.manager.bs.entity.TbEnterprise;
 import com.geovis.manager.bs.entity.TbParkGrid;
+import com.geovis.manager.bs.entity.TbRiskHazardsHandle;
 import com.geovis.manager.bs.service.ITbEnterpriseService;
 import com.geovis.manager.bs.service.ITbParkGridService;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
@@ -103,4 +105,30 @@ public class TbParkGridController extends BaseController<ITbParkGridService> {
         return Result.ok();
     }
 
+
+    @ApiOperation("隐患分布区域")
+    @ApiOperationSupport(order = 5)
+    @PostMapping("/getDangerList")
+    public Result<List<TbParkGridDangerNumDto>> getDangerList() {
+
+
+        return Result.ok(baseService.statistic());
+    }
+
+    @ApiOperation("企业网格总数量")
+    @ApiOperationSupport(order = 6)
+    @PostMapping("/count")
+    public Result<?> count() {
+        return Result.ok(baseService.count());
+    }
+
+
+    @ApiOperation("风险分布区域")
+    @ApiOperationSupport(order = 5)
+    @PostMapping("/getHazardList")
+    public Result<List<TbParkGridDangerNumDto>> getHazardList() {
+
+
+        return Result.ok(baseService.statisticHazard());
+    }
 }

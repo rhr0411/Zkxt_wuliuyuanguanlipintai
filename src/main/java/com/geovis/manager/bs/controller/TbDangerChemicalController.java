@@ -71,4 +71,12 @@ public class TbDangerChemicalController extends BaseController<ITbDangerChemical
     }
 
 
+
+    @ApiOperation("危险化学总数量")
+    @ApiOperationSupport(order = 4)
+    @PostMapping("/count")
+    public Result<?> deletcounteById() {
+        return Result.ok(baseService.count());
+    }
+
 }
