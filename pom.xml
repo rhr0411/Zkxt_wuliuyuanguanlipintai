@@ -92,13 +92,6 @@
             <scope>test</scope>
         </dependency>
 
-        <dependency>
-            <groupId>com.tencentcloudapi</groupId>
-            <artifactId>tencentcloud-sdk-java</artifactId>
-            <!-- go to https://search.maven.org/search?q=tencentcloud-sdk-java and get the latest version. -->
-            <!-- 请到https://search.maven.org/search?q=tencentcloud-sdk-java查询所有版本，最新版本如下 -->
-            <version>3.1.1000</version>
-        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -106,6 +99,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
+                    <mainClass>com.geovis.manager.GeovisManagerApplication</mainClass>
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>
@@ -116,5 +110,7 @@
             </plugin>
         </plugins>
     </build>
+    <!-- 打包类型 -->
+    <packaging>jar</packaging>
 
 </project>
