@@ -47,7 +47,7 @@ public class TbEnterprise extends BaseEntity {
     @ApiModelProperty("安全生产许可编号")
     private String safeProductAuthno;
 
-    @ApiModelProperty("企业详情地址")
+    @ApiModelProperty("企业区域坐标")
     private String address;
 
     @ApiModelProperty("统一社会信用代码")
@@ -115,5 +115,8 @@ public class TbEnterprise extends BaseEntity {
 
     @ApiModelProperty("黑名单备注")
     private String blacklistRemark;
+
+    @ApiModelProperty("黑名单企业区域备注")
+    private String area;
 
 }

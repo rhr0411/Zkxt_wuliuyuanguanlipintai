@@ -16,6 +16,7 @@ import com.geovis.common.mybatis.page.PageParam;
 import com.geovis.common.mybatis.page.PageResult;
 import com.geovis.manager.bs.dto.*;
 import com.geovis.manager.bs.entity.TbEvaluateReport;
+import com.geovis.manager.bs.service.ITbEnterpriseService;
 import com.geovis.manager.bs.service.ITbEvaluateReportService;
 import com.geovis.manager.system.dto.SystemFileQueryDTO;
 import com.geovis.manager.system.entity.SystemFileBusiness;
@@ -29,9 +30,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -49,6 +52,9 @@ import java.util.stream.Collectors;
 @Slf4j
 @Validated
 public class TbEvaluateReportController extends BaseController<ITbEvaluateReportService> {
+
+    @Resource
+    private ITbEnterpriseService iTbEnterpriseService;
 
     private final ISystemFileBusinessService systemFileBusinessService;
 
@@ -69,6 +75,15 @@ public class TbEvaluateReportController extends BaseController<ITbEvaluateReport
                     .le(ObjectUtil.isNotEmpty(queryDTO.getEvaluateTimeEnd()), TbEvaluateReport::getEvaluateTime, queryDTO.getEvaluateTimeEnd());
         }
         baseService.page(page, wrapper);
+
+        page.convert(new Function<TbEvaluateReport, Object>() {
+            @Override
+            public Object apply(TbEvaluateReport tbEvaluateReport) {
+                tbEvaluateReport.setEnterpriseName(iTbEnterpriseService.getById(tbEvaluateReport.getEnterpriseId()).getName());
+                return tbEvaluateReport;
+            }
+        });
+
         return Result.ok(new PageResult<TbEvaluateReport>(page));
     }
 
@@ -104,6 +119,8 @@ public class TbEvaluateReportController extends BaseController<ITbEvaluateReport
     @PostMapping("/getById/{id}")
     public Result<TbEvaluateReportDTO> getById(@PathVariable("id") String id) {
         TbEvaluateReport entity = baseService.getById(id);
+        entity.setEnterpriseName(iTbEnterpriseService.getById(entity.getEnterpriseId()).getName());
+
         TbEvaluateReportDTO dto = null;
         if (ObjectUtil.isNotEmpty(entity)) {
             dto = BeanUtil.copyProperties(entity, TbEvaluateReportDTO.class);

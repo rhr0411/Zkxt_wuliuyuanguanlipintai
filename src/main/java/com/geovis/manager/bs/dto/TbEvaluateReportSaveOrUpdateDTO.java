@@ -1,15 +1,18 @@
 package com.geovis.manager.bs.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -40,7 +43,9 @@ public class TbEvaluateReportSaveOrUpdateDTO implements Serializable {
 
     @ApiModelProperty("评估时间")
     @NotNull(message = "评估时间不能为空")
-    private LocalDateTime evaluateTime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date evaluateTime;
 
     @ApiModelProperty("危险源等级：1-一级 2-二级 3-三级 4-四级 0-非重大")
     @NotEmpty(message = "危险源等级不能为空")

@@ -45,6 +45,9 @@ public class TbEvaluateReportDTO implements Serializable {
     @ApiModelProperty("企业ID")
     private String enterpriseId;
 
+    @ApiModelProperty("企业名称")
+    private String enterpriseName;
+
     @ApiModelProperty("评审意见")
     private String reviewComments;
 

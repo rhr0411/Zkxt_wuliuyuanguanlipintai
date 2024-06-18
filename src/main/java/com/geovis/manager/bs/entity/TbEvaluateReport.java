@@ -1,5 +1,6 @@
 package com.geovis.manager.bs.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.geovis.common.core.entity.BaseEntity;
 import java.time.LocalDateTime;
@@ -44,6 +45,10 @@ public class TbEvaluateReport extends BaseEntity {
 
     @ApiModelProperty("评审意见")
     private String reviewComments;
+
+    @TableField(exist = false)
+    @ApiModelProperty("企业名称")
+    private String enterpriseName;
 
 
 }

@@ -221,4 +221,13 @@ public class TbEnterpriseController extends BaseController<ITbEnterpriseService>
         return Result.ok(list);
     }
 
+
+    @ApiOperation("可视化端-企业分类标注")
+    @ApiOperationSupport(order = 10)
+    @GetMapping("/showAdress")
+    public Result<String> showAdress(@RequestParam String id) {
+        TbEnterprise byId = baseService.getById(id);
+        return Result.ok(byId.getArea());
+    }
+
 }
